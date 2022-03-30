@@ -1,41 +1,49 @@
 <div>
     <div class="submit-form">
       <div *ngIf="!submitted">
-        <div class="form-group">
-          <label for="title">Marca</label>
-          <input type="text" class="form-control" id="title" required [(ngModel)]="veiculo.marca" name="marca"/>
+        <div class="row">
+          <div class="form-group col-sm-4">
+            <label for="title">Marca</label>
+            <input type="text" class="form-control" id="title" required [(ngModel)]="veiculo.marca" name="marca" required/>
+          </div>
+  
+          <div class="form-group col-sm-4">
+            <label for="title">Modelo</label>
+            <input type="text" class="form-control" id="title" required [(ngModel)]="veiculo.modelo" name="modelo" required/>
+          </div>
+  
+          <div class="form-group col-sm-4">
+            <label for="title">Ano</label>
+            <input type="text" class="form-control" id="title" required [(ngModel)]="veiculo.ano" name="ano" required/>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="form-group col-sm-4">
+            <label for="title">Placa</label>
+            <input type="text" class="form-control" id="title" required [(ngModel)]="veiculo.placa" name="placa" required/>
+          </div>
+  
+          <div class="form-group col-sm-4">
+            <label for="title">Chassi</label>
+            <input type="text" class="form-control" id="title" required [(ngModel)]="veiculo.chassi" name="chassi" required/>
+          </div>
+  
+          <div class="form-group col-sm-4">
+            <label for="title">Renavam</label>
+            <input type="text" class="form-control" id="title" required [(ngModel)]="veiculo.renavam" name="renavam" required/>
+          </div>
+
         </div>
 
-        <div class="form-group">
-          <label for="title">Modelo</label>
-          <input type="text" class="form-control" id="title" required [(ngModel)]="veiculo.modelo" name="modelo"/>
+        <div class="row mt-2">
+          <div class="col-sm-12">
+            <button class="float-sm-right" (click)="save()" class="btn btn-success">Salvar</button>
+          </div>
         </div>
-
-        <div class="form-group">
-          <label for="title">Ano</label>
-          <input type="text" class="form-control" id="title" required [(ngModel)]="veiculo.ano" name="ano"/>
-        </div>
-
-        <div class="form-group">
-          <label for="title">Placa</label>
-          <input type="text" class="form-control" id="title" required [(ngModel)]="veiculo.placa" name="placa"/>
-        </div>
-
-        <div class="form-group">
-          <label for="title">Chassi</label>
-          <input type="text" class="form-control" id="title" required [(ngModel)]="veiculo.chassi" name="chassi"/>
-        </div>
-
-        <div class="form-group">
-          <label for="title">Renavam</label>
-          <input type="text" class="form-control" id="title" required [(ngModel)]="veiculo.renavam" name="renavam"/>
-        </div>
-
-        <button (click)="save()" class="btn btn-success">Salvar</button>
       </div>
       <div *ngIf="submitted">
         <h4>Tutorial was submitted successfully!</h4>
-        <button class="btn btn-success" (click)="newTutorial()">Add</button>
       </div>
     </div>
   </div>

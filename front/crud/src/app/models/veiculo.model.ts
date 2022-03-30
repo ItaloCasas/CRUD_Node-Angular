@@ -1,8 +1,8 @@
 export class Veiculo {
     id?: number;
     placa?: string;
-    chassi?: number;
-    renavam?: number;
+    chassi?: string;
+    renavam?: string;
     modelo?: string;
     marca?: string;
     ano?: number;
