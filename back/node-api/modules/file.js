@@ -55,5 +55,33 @@ class FileModule {
             console.log(e)
         }
     }
+
+    async updateArquivo(id, data) {
+        try {
+            return this.arquivoToJson().then((json, i) => {
+                let changed = false;
+                let w = fileHeader;
+                json.forEach(v => { 
+                    if (parseInt(id) === parseInt(v.id)) { 
+                        w = w.concat(id)
+                            .concat(',')
+                            .concat(Object.values(data).join(',')
+                            .concat('\r\n'));
+                        changed = true;
+                    } else {
+                        w = w.concat(Object.values(v).join(',').concat('\r\n'));    
+                    }
+                    console.log('----------');
+                    console.log(w);
+                });
+                console.log(w);
+                fs.writeFile(filePath, w, e => console.log(e));
+                return changed;
+            });
+        } catch (e) {
+            console.log('Erro na conversão do arquivo para JSON.');
+            console.log(e)
+        }
+    }
   }
   module.exports = FileModule; 

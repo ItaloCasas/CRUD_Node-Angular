@@ -39,16 +39,45 @@ app.get('/api/veiculo/:id', (req, res) => {
 
 // INSERT
 app.post('/api/inserir', (req, res) => {
-    let val = new ValidationModule();
-    let valid = val.isValid(req.query);
-    if (valid.error) {
-        return res.status(500).send(valid.error);
+    try {
+        let val = new ValidationModule();
+        let valid = val.isValid(req.query);
+        if (valid.error) {
+            return res.status(500).send(valid.error.details[0].message);
+        }
+
+        let f = new FileModule();
+        f.adicionarArquivo(req.query).then(e => {
+            if (e) {
+                res.status(500).send("Erro ao inserir no arquivo.");
+            }
+            res.status(200).send("Registro inserido no arquivo.");
+        })
+
+    } catch(e) {
+        console.log(e);
     }
-    res.status(200).send("Removido com sucesso.");
 });
 
 // UPDATE
-app.put('/api/alterar/:id', (req, res) => {});
+app.put('/api/alterar/:id', (req, res) => {
+    try {
+        let val = new ValidationModule();
+        let valid = val.isValid(req.query);
+        if (valid.error) {
+            return res.status(500).send(valid.error.details[0].message);
+        }
+
+        let f = new FileModule();
+        f.updateArquivo(req.params.id, req.query).then( e => {
+                console.log(e);
+                e ? res.status(200).send("Alterações feitas com sucesso") : res.status(500).send("Não foram feitas alterações");
+            }
+        );
+    } catch(e) {
+        console.log(e);
+    }
+});
 
 // DELETE
 app.delete('/api/remover/:id', (req, res) => {
