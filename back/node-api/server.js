@@ -19,6 +19,7 @@ app.listen(port, () => console.log('listening port: '+port));
 
 // READ LISTA
 app.get('/api/veiculos', (req, res) => {
+    console.log('/api/veiculos');
     try {
         let f = new FileModule();
         f.arquivoToJson().then((obj) => {
@@ -34,6 +35,7 @@ app.get('/api/veiculos', (req, res) => {
 
 // READ INDIVIDUAL
 app.get('/api/veiculo/:id', (req, res) => {
+    console.log('/api/veiculo/:id');
     try {
         let f = new FileModule();
         f.arquivoToJson().then((obj) => {
@@ -48,13 +50,13 @@ app.get('/api/veiculo/:id', (req, res) => {
 
 // INSERT
 app.post('/api/inserir', (req, res) => {
+    console.log('/api/inserir');
     try {
         let val = new ValidationModule();
         let valid = val.isValid(req.body);
         if (valid.error) {
             return res.status(500).send(valid.error.details[0].message);
         }
-
         let f = new FileModule();
         f.adicionarArquivo(req.body).then(e => {
             if (e) {
@@ -71,14 +73,15 @@ app.post('/api/inserir', (req, res) => {
 // UPDATE
 app.put('/api/alterar/:id', (req, res) => {
     try {
+        console.log('/api/alterar/:id');
         let val = new ValidationModule();
-        let valid = val.isValid(req.query);
+        let valid = val.isValid(req.body);
         if (valid.error) {
             return res.status(500).send(valid.error.details[0].message);
         }
 
         let f = new FileModule();
-        f.updateArquivo(req.params.id, req.query).then( e => {
+        f.updateArquivo(req.params.id, req.body).then( e => {
                 console.log(e);
                 e ? res.status(200).send("Alterações feitas com sucesso") : res.status(500).send("Não foram feitas alterações");
             }
@@ -90,6 +93,7 @@ app.put('/api/alterar/:id', (req, res) => {
 
 // DELETE
 app.delete('/api/remover/:id', (req, res) => {
+    console.log('/api/remover/:id');
     let f = new FileModule();
     f.removeFromArquivo(req.params.id).then((obj) => {
         console.log(obj);

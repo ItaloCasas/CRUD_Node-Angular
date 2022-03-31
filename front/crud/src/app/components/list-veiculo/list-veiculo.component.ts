@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import { DataSource } from '@angular/cdk/table';
 import { VeiculoService } from 'src/app/services/veiculo.service';
+import { Router } from '@angular/router';
 
  @Component({
   selector: 'app-list-veiculo',
@@ -8,10 +9,10 @@ import { VeiculoService } from 'src/app/services/veiculo.service';
   styleUrls: ['./list-veiculo.component.css']
 })
 export class ListVeiculoComponent implements OnInit{
-  displayedColumns: string[] = ['id','ano','chassi','renavam','modelo','marca','placa', 'del'];
+  displayedColumns: string[] = ['id','ano','chassi','renavam','modelo','marca','placa', 'del', 'edit'];
   dataSource = [];
 
-  constructor(private svc: VeiculoService){}
+  constructor(private svc: VeiculoService, private router: Router){}
 
   ngOnInit(): void {
     this.loadVeiculos();
@@ -26,9 +27,13 @@ export class ListVeiculoComponent implements OnInit{
         this.loadVeiculos();
       },
       error: (e:any) => {
-        e && e.error ? alert(e.error.text) : alert("Erro ao remover veículo.")
+        this.loadVeiculos();
       }
     });
+  }
+
+  editVeiculo(id: number){
+    this.router.navigate([`inserir/${id}`]);
   }
 
   loadVeiculos() {
@@ -44,8 +49,3 @@ export class ListVeiculoComponent implements OnInit{
     });
   }
 }
-
-
-/**  Copyright 2022 Google LLC. All Rights Reserved.
-    Use of this source code is governed by an MIT-style license that
-    can be found in the LICENSE file at https://angular.io/license */

@@ -37,7 +37,8 @@ class FileModule {
 
     async adicionarArquivo(data) {
         return this.arquivoToJson().then(json => {
-            let obj = [json.length+1].concat(Object.values(data));
+            console.log(json);
+            let obj = [parseInt(json[json.length-1].id)+1].concat(Object.values(data));
             fs.appendFile(filePath, obj.join(',').concat('\r\n'), e => console.log(e));
         })
     }
