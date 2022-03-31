@@ -37,9 +37,10 @@ class ValidationModule {
 
     isValid(data) {
         try {
+            console.log(data);
             return schema.validate(data);
         } catch (e) {
-            console.log(e);
+            // console.log(e);
         }
         
     }

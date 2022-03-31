@@ -10,7 +10,7 @@ import { VeiculoService } from 'src/app/services/veiculo.service';
 })
 export class AddVeiculoComponent implements OnInit {
 
-  veiculo: Veiculo = { id: -1, ano: 0, chassi: '', renavam: '', marca: '', modelo: '', placa: '' };
+  veiculo: Veiculo = { ano: 0, chassi: '', renavam: '', marca: '', modelo: '', placa: '' };
   submitted: boolean = false;
   constructor(private svc: VeiculoService) { 
   }
@@ -23,33 +23,11 @@ export class AddVeiculoComponent implements OnInit {
       .subscribe({
         next: (res:any) => {
           console.log(res);
-          debugger;
           alert("Veículo inserido com sucesso.");
         },
         error: (e:any) => {
-          console.error(e);
-          alert("Veículo não pôde ser inserido.");
+          e && e.error ? alert(e.error.text) : alert("Erro ao inserir veículo")
         }
       });
   }
-
-  placaValid () { return this.veiculo.placa && this.veiculo.placa.length == 7; }
-  marcaValid () { 
-    debugger;
-    return this.veiculo.marca !== undefined && this.veiculo.marca.length > 1; 
-  }
-
-  validate() {new Date()
-    /*
-    let fy: number = new Date().getFullYear();
-    isValid = isValid && this.veiculo.chassi && this.veiculo.chassi.length == 17;
-    isValid = isValid && this.veiculo.renavam && this.veiculo.renavam.length == 7;
-    isValid = isValid && this.veiculo.modelo && this.veiculo.modelo.length > 1;
-    isValid = isValid && this.veiculo.marca && this.veiculo.marca.length > 1;
-    isValid = isValid && this.veiculo.ano && this.veiculo.ano >= 1950 && fy && this.veiculo.ano <= fy;
-
-    return isValid;
-    */
-  }
-
 }

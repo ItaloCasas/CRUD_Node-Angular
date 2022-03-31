@@ -1,3 +1,4 @@
+const cors = require('cors');
 
 const express = require('express');
 const app = express();
@@ -7,18 +8,26 @@ const ValidationModule = require("./modules/validation")
 
 app.use(express.json());
 
+var corsOptions = {
+    origin: '*',
+    optionsSuccessStatus: 200
+}
+app.use(cors(corsOptions));
+
 const port = process.env.PORT || 8080;
 app.listen(port, () => console.log('listening port: '+port));
 
 // READ LISTA
 app.get('/api/veiculos', (req, res) => {
     try {
+        let f = new FileModule();
         f.arquivoToJson().then((obj) => {
             return !obj ? 
                 res.status(500).send("Erro ao ler arquivo de veículos") :
                 res.status(200).send(obj);
         });
     } catch(e) {
+        console.log(e);
         res.status(500).send(e);
     }
 });
@@ -41,13 +50,13 @@ app.get('/api/veiculo/:id', (req, res) => {
 app.post('/api/inserir', (req, res) => {
     try {
         let val = new ValidationModule();
-        let valid = val.isValid(req.query);
+        let valid = val.isValid(req.body);
         if (valid.error) {
             return res.status(500).send(valid.error.details[0].message);
         }
 
         let f = new FileModule();
-        f.adicionarArquivo(req.query).then(e => {
+        f.adicionarArquivo(req.body).then(e => {
             if (e) {
                 res.status(500).send("Erro ao inserir no arquivo.");
             }
@@ -55,7 +64,7 @@ app.post('/api/inserir', (req, res) => {
         })
 
     } catch(e) {
-        console.log(e);
+        res.status(500).send(e);
     }
 });
 

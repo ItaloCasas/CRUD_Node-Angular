@@ -2,7 +2,7 @@ const fs = require("fs");
 const csv = require("csvtojson");
 
 const filePath = './dados/veiculos.csv';
-const fileHeader = 'id,placa,chassi,renavam,modelo,marca,ano\n';
+const fileHeader = 'id,ano,chassi,renavam,modelo,marca,placa\r\n';
 
 class FileModule {
     constructor() {}
@@ -44,12 +44,12 @@ class FileModule {
 
     async removeFromArquivo(id) {
         try {
-            return this.arquivoToJson().then(json => {
+            this.arquivoToJson().then(json => {
                 let nList = json.filter(obj => parseInt(obj.id) !== parseInt(id));
                 let nl1 = nList.map(i => i = Object.values(i).join(','));
                 fs.writeFile(filePath, fileHeader.concat(nl1.join('\r\n')), e => console.log(e));
                 return nList.length < json.length;
-            });
+            })
         } catch (e) {
             console.log('Erro na conversão do arquivo para JSON.');
             console.log(e)
